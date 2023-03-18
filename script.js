@@ -11,8 +11,10 @@ class ProductManager {
 
     //Metodo añadir producto
     addProduct(product) {
-        product.id = ProductManager.generateId ++
-        this.products.push(product)
+        const productRepeated = this.products.find(element => element.code === product.code);
+        if(productRepeated) return "Product already added.";
+        product.id = ProductManager.generateId ++;
+        this.products.push(product);
     }
 
     //Metodo para obtener todos los productos
@@ -39,7 +41,7 @@ const p1 = {
     description: "mascaras para la cara",
     price: 2000,
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/bossyapp-54cf2.appspot.com/o/productsImages%2Fmask_alpineroses.png?alt=media&token=d84fd60e-e3bc-4d34-ba41-025bc3d6797f",
-    code: "1L",
+    code: "1S",
     stock: 5
 }
 productManager.addProduct(p1)
@@ -55,7 +57,20 @@ const p2 = {
 }
 productManager.addProduct(p2)
 
+//Probamos añadir un producto con el mismo code que otro, pero con las otras propiedades diferentes
+const p3 = {
+    title: "asd",
+    description: "asdd1",
+    price: 500,
+    thumbnail: "www.google.com",
+    code: "1F",
+    stock: 10
+}
+//Nos printea "Product already added."
+console.log(productManager.addProduct(p3))
+
 //Printeamos por consola el metodo getProducts que nos devuelve los productos ya cargados.
 console.log(productManager.getProducts())
 
+//Printeamos el producto buscado por su ID.
 console.log("Producto buscado por su id: \n",productManager.getProductById(1))
